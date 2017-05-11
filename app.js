@@ -5,7 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// routes
 var index = require('./routes/index');
+var analytics = require('./routes/analytics');
 var userproperties = require('./routes/userproperties');
 var userdailyproperties = require('./routes/userdailyproperties');
 var userpurchases = require('./routes/userpurchases');
@@ -29,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // API Routes
 app.use('/', index);
+app.use('/analytics', analytics);
 app.use('/api/v1/userproperties', userproperties);
 app.use('/api/v1/userdailyproperties', userdailyproperties);
 app.use('/api/v1/userpurchases', userpurchases);

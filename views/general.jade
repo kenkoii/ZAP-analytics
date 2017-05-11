@@ -1,0 +1,29 @@
+extends layout
+
+block content
+    table#example
+    script.
+        $(document).ready(function() {
+            //- var data = #{results}
+            var data = !{JSON.stringify(results)}
+            $('#example').DataTable({
+                "data": data,
+                "columns": [
+                    {   "data" : "DATE",
+                        "title": "Date" },
+                    {   "data" : "DAU",
+                        "title": "DAU" },
+                    {   "data" : "RDAU",
+                        "title": "RDAU" },
+                    {   "data" : "Installs",
+                        "title": "Installs" }
+                ],
+                "columnDefs": [{
+                    "defaultContent": "-",
+                    "targets": "_all"
+                },{
+                    "className": "dt-center", 
+                    "targets": "_all"
+                }]
+            });
+        });
