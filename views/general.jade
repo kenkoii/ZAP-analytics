@@ -1,29 +1,43 @@
 extends layout
 
 block content
+    form(action='/analytics/general',method='post')
+        p.
+            From
+        input(id='from', name="from", type='text')
+        p.
+            To
+        input(id='to', name="to", type='text')
+        input(id='submit',type='submit',value='Generate')
     table#example
-    script.
+    script(type='text/javascript').
         $(document).ready(function() {
-            //- var data = #{results}
-            var data = !{JSON.stringify(results)}
-            $('#example').DataTable({
-                "data": data,
-                "columns": [
-                    {   "data" : "DATE",
-                        "title": "Date" },
-                    {   "data" : "DAU",
-                        "title": "DAU" },
-                    {   "data" : "RDAU",
-                        "title": "RDAU" },
-                    {   "data" : "Installs",
-                        "title": "Installs" }
-                ],
-                "columnDefs": [{
-                    "defaultContent": "-",
-                    "targets": "_all"
-                },{
-                    "className": "dt-center", 
-                    "targets": "_all"
-                }]
-            });
+            $('#from').datepicker({dateFormat: 'yy-mm-dd'});
+            $('#to').datepicker({dateFormat: 'yy-mm-dd'});
+            renderTable();
         });
+
+        function renderTable(){
+            var data = !{JSON.stringify(results)}
+                $('#example').DataTable({
+                    "data": data,
+                    "columns": [
+                        {   "data" : "DATE",
+                            "title": "Date" },
+                        {   "data" : "DAU",
+                            "title": "DAU" },
+                        {   "data" : "RDAU",
+                            "title": "RDAU" },
+                        {   "data" : "Installs",
+                            "title": "Installs" }
+                    ],
+                    "columnDefs": [{
+                        "defaultContent": "-",
+                        "targets": "_all"
+                    },{
+                        "className": "dt-center", 
+                        "targets": "_all"
+                    }]
+                });
+        }
+        
