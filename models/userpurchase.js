@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     ItemID: DataTypes.INTEGER,
     Date: DataTypes.DATE,
-    Price: DataTypes.INTEGER,
+    Price: DataTypes.DECIMAL,
     IsFirst: DataTypes.BOOLEAN
   }, {
     classMethods: {

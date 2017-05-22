@@ -9,73 +9,100 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  const items = JSON.parse(req.body);
+  const items = req.body;
+  let count = 0;
+  let promises = [];
   for(var i = 0; i < items.length; i++){
     var item = items[i];
     switch(item.className){
       case 'Stage':
-        insertStage(item.params);
+        promises.push(insertStage(item.params)
+          .then((res)=>{
+          count++;
+        }).catch((err)=>{
+          console.log(err);
+        }));
         break;
       case 'UserProperty':
-        insertUserProperty(item.params);
+        promises.push(insertUserProperty(item.params)
+          .then((res)=>{
+          count++;
+        }).catch((err)=>{
+          console.log(err);
+        }));
         break;
       case 'UserPurchase':
-        insertUserPurchase(item.params);
+        promises.push(insertUserPurchase(item.params)
+          .then((res)=>{
+          count++;
+        }).catch((err)=>{
+          console.log(err);
+        }));
         break;
       case 'UserDailyProperty':
-        insertUserDailyProperty(item.params);
+        promises.push(insertUserDailyProperty(item.params)
+          .then((res)=>{
+          count++;
+          console.log(count);
+        }).catch((err)=>{
+          console.log(err);
+        }));
         break;
       case 'Tutorial':
-        insertTutorial(item.params);
+        promises.push(insertTutorial(item.params)
+          .then((res)=>{
+          count++;
+        }).catch((err)=>{
+          console.log(err);
+        }));
         break;
     }
   }
+  Promise.all(promises)
+    .then(() => {
+      res.json(count);
+    });
 });
 
 function insertStage(item) {
-  models.StageData.create(
+  return models.StageData.create(
      item
-  ).then(function(stageData) {
-    // res.json(stageData);
-  });
+  );
 }
 
 function insertUserProperty(item) {
-  models.UserProperty.upsert(
+  return models.UserProperty.upsert(
     item,
       {
       where: {
         UserPropertyID: item.UserPropertyID
       }
-  }).then(function(userProperty) {
-    // res.json(userProperty);
   });
 }
 
 function insertUserPurchase(item) {
-  models.UserPurchase.create(
+  return models.UserPurchase.create(
     item
-  ).then(function(userPurchase) {
-    // res.json(userPurchase);
-  });
+  );
 }
 
 function insertUserDailyProperty(item) {
-  models.UserDailyProperty.create(
+  return models.UserDailyProperty.create(
     item
-  ).then(function(userDailyProperty) {
-    // res.json(userDailyProperty);
-  });
+  );
 }
 
 function insertTutorial(item) {
-  models.TutorialData.create({
-    TutorialDataID: parseInt(item.UserPropertyID.toString() + item.TutorialID.toString()),
+  var pKey = parseInt(item.UserPropertyID.toString() + item.TutorialID.toString());
+  return models.TutorialData.upsert({
+    TutorialDataID: pKey,
     UserPropertyID: item.UserPropertyID,
     TutorialID: item.TutorialID,
     Date: item.Date
-  }).then(function(tutorialData) {
-    // res.json(tutorialData);
+  },{
+    where: {
+      TutorialDataID: pKey
+    }
   });
 }
 
