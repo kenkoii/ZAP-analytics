@@ -31,7 +31,6 @@ router.post('/', function(req, res) {
   }).then(function(userProperty) {
     res.json(userProperty);
   });
-  
 });
 
 module.exports = router;
