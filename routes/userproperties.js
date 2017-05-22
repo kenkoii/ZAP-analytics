@@ -22,11 +22,18 @@ router.get('/:userid', function(req, res, next) {
 
 /* POST to UserProperties listing. */
 router.post('/', function(req, res) {
-  models.UserProperty.create(
-    req.body
-  ).then(function(userProperty) {
+  models.UserProperty.upsert(
+    req.body,
+      {
+      where: {
+        UserPropertyID: req.body.UserPropertyID
+      }
+  }).then(function(userProperty) {
     res.json(userProperty);
   });
+  
 });
 
 module.exports = router;
+
+
