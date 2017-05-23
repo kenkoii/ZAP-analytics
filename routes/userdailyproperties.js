@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 router.get('/:userid', function(req, res, next) {
   models.UserDailyProperty.findOne({
     where: {
-      UserID: req.params.userid
+      userId: req.params.userid
     }
   }).then(function(userDailyProperty) {
     // console.log();

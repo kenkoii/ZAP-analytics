@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 router.get('/:userid', function(req, res, next) {
   models.UserProperty.findOne({
     where: {
-      UserID: req.params.userid
+      userId: req.params.userid
     }
   }).then(function(userProperty) {
     res.json(userProperty);
@@ -26,7 +26,7 @@ router.post('/', function(req, res) {
     req.body,
       {
       where: {
-        UserPropertyID: req.body.UserPropertyID
+        userId: req.body.userId
       }
   }).then(function(userProperty) {
     res.json(userProperty);

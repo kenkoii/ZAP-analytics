@@ -1,18 +1,18 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var TutorialData = sequelize.define('TutorialData', {
-    TutorialDataID: {
+    tutorialDataId: {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    TutorialID: DataTypes.INTEGER,
-    Date: DataTypes.DATE
+    tutorialId: DataTypes.INTEGER,
+    date: DataTypes.DATE
   }, {
     classMethods: {
       associate: function(models) {
         TutorialData.belongsTo(models.UserProperty, {
           onDelete: "CASCADE",
-          foreignKey: 'UserPropertyID'
+          foreignKey: 'userId'
         });
       }
     }

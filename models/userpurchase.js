@@ -1,21 +1,21 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var UserPurchase = sequelize.define('UserPurchase', {
-    UserPurchaseID:  {
+    userPurchaseId:  {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    ItemID: DataTypes.INTEGER,
-    Date: DataTypes.DATE,
-    Price: DataTypes.DECIMAL,
-    IsFirst: DataTypes.BOOLEAN
+    itemId: DataTypes.INTEGER,
+    date: DataTypes.DATE,
+    price: DataTypes.DECIMAL,
+    isFirst: DataTypes.BOOLEAN
   }, {
     classMethods: {
       associate: function(models) {
         UserPurchase.belongsTo(models.UserProperty, {
           onDelete: "CASCADE",
-          foreignKey: 'UserPropertyID'
+          foreignKey: 'userId'
         });
       }
     }

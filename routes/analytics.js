@@ -75,7 +75,7 @@ function insertUserProperty(item) {
     item,
       {
       where: {
-        UserPropertyID: item.UserPropertyID
+        userId: item.userId
       }
   });
 }
@@ -93,15 +93,15 @@ function insertUserDailyProperty(item) {
 }
 
 function insertTutorial(item) {
-  var pKey = parseInt(item.UserPropertyID.toString() + item.TutorialID.toString());
+  var pKey = parseInt(item.userId.toString() + item.tutorialId.toString());
   return models.TutorialData.upsert({
-    TutorialDataID: pKey,
-    UserPropertyID: item.UserPropertyID,
-    TutorialID: item.TutorialID,
-    Date: item.Date
+    tutorialDataId: pKey,
+    userId: item.userId,
+    tutorialId: item.tutorialId,
+    date: item.date
   },{
     where: {
-      TutorialDataID: pKey
+      tutorialDataId: pKey
     }
   });
 }

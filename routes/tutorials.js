@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 router.get('/:userid', function(req, res, next) {
   models.TutorialData.findOne({
     where: {
-      UserID: req.params.userid
+      UserId: req.params.userid
     }
   }).then(function(tutorialData) {
     res.json(tutorialData);
@@ -23,10 +23,10 @@ router.get('/:userid', function(req, res, next) {
 /* POST to UserProperties listing. */
 router.post('/', function(req, res) {
   models.TutorialData.create({
-    TutorialDataID: parseInt(req.body.UserPropertyID.toString() + req.body.TutorialID.toString()),
-    UserPropertyID: req.body.UserPropertyID,
-    TutorialID: req.body.TutorialID,
-    Date: req.body.Date
+    tutorialDataId: parseInt(req.body.userId.toString() + req.body.tutorialId.toString()),
+    userId: req.body.userId,
+    tutorialId: req.body.tutorialId,
+    date: req.body.date
   }).then(function(tutorialData) {
     res.json(tutorialData);
   });

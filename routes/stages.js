@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 router.get('/:userid', function(req, res, next) {
   models.StageData.findOne({
     where: {
-      UserID: req.params.userid
+      UserId: req.params.userid
     }
   }).then(function(stageData) {
     res.json(stageData);
