@@ -21,6 +21,7 @@ router.post('/', function(req, res, next) {
           count++;
         }).catch((err)=>{
           console.log(err);
+          res.json(-1);
         }));
         break;
       case 'UserProperty':
@@ -29,6 +30,7 @@ router.post('/', function(req, res, next) {
           count++;
         }).catch((err)=>{
           console.log(err);
+          res.json(-1);
         }));
         break;
       case 'UserPurchase':
@@ -37,6 +39,7 @@ router.post('/', function(req, res, next) {
           count++;
         }).catch((err)=>{
           console.log(err);
+          res.json(-1);
         }));
         break;
       case 'UserDailyProperty':
@@ -46,6 +49,7 @@ router.post('/', function(req, res, next) {
           console.log(count);
         }).catch((err)=>{
           console.log(err);
+          res.json(-1);
         }));
         break;
       case 'Tutorial':
@@ -54,6 +58,7 @@ router.post('/', function(req, res, next) {
           count++;
         }).catch((err)=>{
           console.log(err);
+          res.json(-1);
         }));
         break;
     }
