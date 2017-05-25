@@ -27,10 +27,15 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('dist'));
+// app.use(express.static(__dirname + 'public' + 'apidoc'));
 
 
 // API Routes
+app.get('/help', (req, res, next) => {
+  res.sendFile(__dirname + '/dist/index.html');
+});
+
 app.use('/', index);
 app.use('/analytics', view);
 app.use('/api/v1/analytics', analytics);

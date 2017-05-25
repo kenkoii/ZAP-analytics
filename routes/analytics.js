@@ -16,56 +16,28 @@ router.post('/', function(req, res, next) {
     var item = items[i];
     switch(item.className){
       case 'Stage':
-        promises.push(insertStage(item.params)
-          .then((res)=>{
-          count++;
-        }).catch((err)=>{
-          console.log(err);
-          res.json(-1);
-        }));
+        promises.push(insertStage(item.params));
         break;
       case 'UserProperty':
-        promises.push(insertUserProperty(item.params)
-          .then((res)=>{
-          count++;
-        }).catch((err)=>{
-          console.log(err);
-          res.json(-1);
-        }));
+        promises.push(insertUserProperty(item.params));
         break;
       case 'UserPurchase':
-        promises.push(insertUserPurchase(item.params)
-          .then((res)=>{
-          count++;
-        }).catch((err)=>{
-          console.log(err);
-          res.json(-1);
-        }));
+        promises.push(insertUserPurchase(item.params));
         break;
       case 'UserDailyProperty':
-        promises.push(insertUserDailyProperty(item.params)
-          .then((res)=>{
-          count++;
-          console.log(count);
-        }).catch((err)=>{
-          console.log(err);
-          res.json(-1);
-        }));
+        promises.push(insertUserDailyProperty(item.params));
         break;
       case 'Tutorial':
-        promises.push(insertTutorial(item.params)
-          .then((res)=>{
-          count++;
-        }).catch((err)=>{
-          console.log(err);
-          res.json(-1);
-        }));
+        promises.push(insertTutorial(item.params));
         break;
     }
   }
   Promise.all(promises)
-    .then(() => {
-      res.json(count);
+    .then((results) => {
+      res.json(results.length);
+    }).catch((err) => {
+      console.log(err);
+      res.json(-1);
     });
 });
 
