@@ -1,0 +1,394 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the documentation for the Analytics API.",
+    "version": "1.0.0",
+    "title": "EigoMonogatari Analytics",
+    "contact": {
+      "email": "kentoyfrecre@gmail.com"
+    }
+  },
+  "host": "frecre-analytics.herokuapp.com",
+  "basePath": "/api/v1",
+  "tags": [{
+    "name": "pet",
+    "description": "Everything about your Pets",
+    "externalDocs": {
+      "description": "Find out more",
+      "url": "http://swagger.io"
+    }
+  }, {
+    "name": "analytics",
+    "description": "Analytics System"
+  }, {
+    "name": "user",
+    "description": "Operations about user",
+    "externalDocs": {
+      "description": "Find out more about our store",
+      "url": "http://swagger.io"
+    }
+  }],
+  "schemes": ["http"],
+  "paths": {
+    "/analytics": {
+      "post": {
+        "tags": ["analytics"],
+        "summary": "inserts a database entry for specific user",
+        "description": "",
+        "operationId": "uploadFile",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [{
+          "name": "[]",
+          "in": "body",
+          "description": "Array of Objects to insert",
+          "required": true,
+          "type": "array[AnalyticsRequest]",
+          "format": "array"
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation, returns number of successful rows inserted",
+            "schema": {
+              "type": "integer",
+              "format": "int",
+              "example": 5
+            }
+          },
+          "400": {
+            "description": "bad request, no UserProperty entry yet, returns -1.",
+            "schema": {
+              "type": "integer",
+              "format": "int",
+              "example": -1
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets"
+      }
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "AnalyticsRequest": {
+      "type": "object",
+      "properties": {
+        "className": {
+          "type": "string",
+          "description": "Table Name",
+          "enum": ["Stage", "Tutorial", "UserProperty", "UserPurchase", "UserDailyProperty"]
+        },
+        "params": {
+          "type": "Object"
+        }
+      }
+    },
+    "UserProperty": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer",
+          "format": "int"
+        },
+        "downloadDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "loginDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "os": {
+          "type": "integer",
+          "format": "int"
+        },
+        "ver": {
+          "type": "integer",
+          "format": "int"
+        },
+        "downloadVer": {
+          "type": "integer",
+          "format": "int"
+        },
+        "reachArea": {
+          "type": "integer",
+          "format": "int"
+        },
+        "wordLevel": {
+          "type": "integer",
+          "format": "int"
+        },
+        "grammarLevel": {
+          "type": "integer",
+          "format": "int"
+        },
+        "playerLevel": {
+          "type": "integer",
+          "format": "int"
+        },
+        "cardAmount": {
+          "type": "integer",
+          "format": "int"
+        },
+        "cardLimit": {
+          "type": "integer",
+          "format": "int"
+        },
+        "chocolate": {
+          "type": "integer",
+          "format": "int"
+        },
+        "gold": {
+          "type": "integer",
+          "format": "int"
+        },
+        "cookie": {
+          "type": "integer",
+          "format": "int"
+        },
+        "eventTicket": {
+          "type": "integer",
+          "format": "int"
+        },
+        "lottery": {
+          "type": "integer",
+          "format": "int"
+        },
+        "lastHp": {
+          "type": "integer",
+          "format": "int"
+        },
+        "lastStr": {
+          "type": "integer",
+          "format": "int"
+        },
+        "lastTotal": {
+          "type": "integer",
+          "format": "int"
+        },
+        "bestHp": {
+          "type": "integer",
+          "format": "int"
+        },
+        "bestStr": {
+          "type": "integer",
+          "format": "int"
+        },
+        "bestTotal": {
+          "type": "integer",
+          "format": "int"
+        },
+        "leaderCard": {
+          "type": "integer",
+          "format": "int"
+        },
+        "helperCard": {
+          "type": "integer",
+          "format": "int"
+        },
+        "friend": {
+          "type": "integer",
+          "format": "int"
+        },
+        "friendLimit": {
+          "type": "integer",
+          "format": "int"
+        },
+        "questionTotal": {
+          "type": "integer",
+          "format": "int"
+        },
+        "factoryTotal": {
+          "type": "integer",
+          "format": "int"
+        },
+        "uraTotal": {
+          "type": "integer",
+          "format": "int"
+        },
+        "fast": {
+          "type": "integer",
+          "format": "int"
+        },
+        "light": {
+          "type": "integer",
+          "format": "int"
+        }
+      }
+    },
+    "UserDailyProperty": {
+      "type": "object",
+      "properties": {
+        "loginDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "gacha": {
+          "type": "JSON"
+        },
+        "quest": {
+          "type": "JSON"
+        },
+        "event": {
+          "type": "JSON"
+        },
+        "cardAmount": {
+          "type": "integer",
+          "format": "int"
+        },
+        "playerLevel": {
+          "type": "integer",
+          "format": "int"
+        },
+        "reachStage": {
+          "type": "integer",
+          "format": "int"
+        },
+        "questionAmount": {
+          "type": "integer",
+          "format": "int"
+        },
+        "factoryAmount": {
+          "type": "integer",
+          "format": "int"
+        },
+        "strengthen": {
+          "type": "integer",
+          "format": "int"
+        },
+        "progress": {
+          "type": "integer",
+          "format": "int"
+        },
+        "sell": {
+          "type": "integer",
+          "format": "int"
+        },
+        "exceedLimit": {
+          "type": "integer",
+          "format": "int"
+        }
+      }
+    },
+    "UserPurchase": {
+      "type": "object",
+      "properties": {
+        "itemId": {
+          "type": "integer",
+          "format": "int"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "price": {
+          "type": "decimal",
+          "format": "float"
+        },
+        "currency": {
+          "type": "string",
+          "format": "ISO"
+        },
+        "isFirst": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Stage": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "state": {
+          "type": "integer",
+          "format": "int"
+        },
+        "isFirst": {
+          "type": "boolean"
+        },
+        "continue": {
+          "type": "integer",
+          "format": "int"
+        },
+        "playerLevel": {
+          "type": "integer",
+          "format": "int"
+        },
+        "stageId": {
+          "type": "integer",
+          "format": "int"
+        },
+        "provinceId": {
+          "type": "integer",
+          "format": "int"
+        },
+        "areaId": {
+          "type": "integer",
+          "format": "int"
+        },
+        "cookie": {
+          "type": "integer",
+          "format": "int"
+        },
+        "chocolate": {
+          "type": "integer",
+          "format": "int"
+        },
+        "friendId": {
+          "type": "integer",
+          "format": "int"
+        },
+        "turn": {
+          "type": "integer",
+          "format": "int"
+        },
+        "correct": {
+          "type": "integer",
+          "format": "int"
+        },
+        "achievement1": {
+          "type": "boolean"
+        },
+        "achievement2": {
+          "type": "boolean"
+        },
+        "achievement3": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Tutorial": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer",
+          "format": "int"
+        },
+        "tutorialId": {
+          "type": "integer",
+          "format": "int"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}
