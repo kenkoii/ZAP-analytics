@@ -1,8 +1,6 @@
 package models
 
 import (
-	"encoding/json"
-	"io"
 	"time"
 
 	"golang.org/x/net/context"
@@ -13,7 +11,7 @@ import (
 
 // Tutorial is data for us to know when to stop
 type Tutorial struct {
-	ID         int64     `json:"id"`
+	ID         int64     `json:"id" datastore:"-"`
 	UserID     int64     `json:"userId"`
 	TutorialID int64     `json:"tutorialId"`
 	Date       time.Time `json:"date"`
@@ -41,23 +39,32 @@ func (tutorial *Tutorial) save(c context.Context) error {
 	return nil
 }
 
+// // NewTutorial inserts a new tutorial into the datastore
+// func NewTutorial(c context.Context, r io.ReadCloser) (*Tutorial, error) {
+
+// 	var tutorial Tutorial
+// 	// tutorial.Timestamp = time.Now()
+// 	err := json.NewDecoder(r).Decode(&tutorial)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	tutorial.ID = 0
+
+// 	err = tutorial.save(c)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	return &tutorial, nil
+// }
+
 // NewTutorial inserts a new tutorial into the datastore
-func NewTutorial(c context.Context, r io.ReadCloser) (*Tutorial, error) {
-
-	var tutorial Tutorial
-	// tutorial.Timestamp = time.Now()
-	err := json.NewDecoder(r).Decode(&tutorial)
+func NewTutorial(c context.Context, tutorial Tutorial) (*Tutorial, error) {
+	err := tutorial.save(c)
 	if err != nil {
 		return nil, err
 	}
-
-	tutorial.ID = 0
-
-	err = tutorial.save(c)
-	if err != nil {
-		return nil, err
-	}
-
 	return &tutorial, nil
 }
 

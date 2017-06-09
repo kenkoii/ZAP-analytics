@@ -2,7 +2,6 @@ package models
 
 import (
 	"encoding/json"
-	"io"
 	"time"
 
 	"golang.org/x/net/context"
@@ -13,21 +12,21 @@ import (
 
 // UserDailyProperty is the information of the user on that day, received once a day/daily.
 type UserDailyProperty struct {
-	ID             int64       `json:"id" datastore:"-"`
-	UserID         int64       `json:"userId"`
-	LoginDate      time.Time   `json:"loginDate"`
-	Gacha          gachaAmount `json:"gacha"`
-	Quest          questAmount `json:"quest"`
-	Event          eventAmount `json:"event"`
-	CardAmount     int64       `json:"cardAmount"`
-	PlayerLevel    int64       `json:"playerLevel"`
-	ReachStage     int64       `json:"reachStage"`
-	QuestionAmount int64       `json:"questionAmount"`
-	FactoryAmount  int64       `json:"factoryAmount"`
-	Strengthen     int64       `json:"strengthen"`
-	Progress       int64       `json:"progress"`
-	Sell           int64       `json:"sell"`
-	ExceedLimit    int64       `json:"exceedLimit"`
+	ID        int64     `json:"id" datastore:"-"`
+	UserID    int64     `json:"userId"`
+	LoginDate time.Time `json:"loginDate"`
+	// Gacha     json.RawMessage `json:"gachaDic"`
+	Quest json.RawMessage `json:"questDic"`
+	// Event          []eventAmount `json:"event"`
+	CardAmount     int64 `json:"cardAmount"`
+	PlayerLevel    int64 `json:"playerLevel"`
+	ReachStage     int64 `json:"reachStage"`
+	QuestionAmount int64 `json:"questionAmount"`
+	FactoryAmount  int64 `json:"factoryAmount"`
+	// Strengthen     int64         `json:"strengthen"`
+	// Progress       int64         `json:"progress"`
+	// Sell           int64         `json:"sell"`
+	// ExceedLimit    int64         `json:"exceedLimit"`
 }
 
 type gachaAmount struct {
@@ -68,22 +67,32 @@ func (userDailyProperty *UserDailyProperty) save(c context.Context) error {
 }
 
 // NewUserDailyProperty inserts a new entry into the datastore
-func NewUserDailyProperty(c context.Context, r io.ReadCloser) (*UserDailyProperty, error) {
+// func NewUserDailyProperty(c context.Context, r io.ReadCloser) (*UserDailyProperty, error) {
 
-	var userDailyProperty UserDailyProperty
-	// userDailyProperty.Timestamp = time.Now()
-	err := json.NewDecoder(r).Decode(&userDailyProperty)
+// 	var userDailyProperty UserDailyProperty
+// 	err := json.NewDecoder(r).Decode(&userDailyProperty)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	userDailyProperty.ID = 0
+
+// 	err = userDailyProperty.save(c)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	return &userDailyProperty, nil
+// }
+
+// NewUserDailyProperty inserts a new entry into the datastore
+func NewUserDailyProperty(c context.Context, userDailyProperty UserDailyProperty) (*UserDailyProperty, error) {
+	// var v map[string]interface{}
+	// _ = json.Unmarshal(userDailyProperty.Quest, &v)
+	// log.Println(v)
+	err := userDailyProperty.save(c)
 	if err != nil {
 		return nil, err
 	}
-
-	userDailyProperty.ID = 0
-
-	err = userDailyProperty.save(c)
-	if err != nil {
-		return nil, err
-	}
-
 	return &userDailyProperty, nil
 }
 

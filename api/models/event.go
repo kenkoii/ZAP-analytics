@@ -1,8 +1,6 @@
 package models
 
 import (
-	"encoding/json"
-	"io"
 	"time"
 
 	"golang.org/x/net/context"
@@ -44,23 +42,41 @@ func (event *Event) save(c context.Context) error {
 	return nil
 }
 
+// // NewEvent inserts a new entry into the datastore
+// func NewEvent(c context.Context, r io.ReadCloser) (*Event, error) {
+
+// 	var event Event
+// 	// event.Timestamp = time.Now()
+// 	err := json.NewDecoder(r).Decode(&event)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	event.ID = 0
+
+// 	err = event.save(c)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	return &event, nil
+// }
+
 // NewEvent inserts a new entry into the datastore
-func NewEvent(c context.Context, r io.ReadCloser) (*Event, error) {
+func NewEvent(c context.Context, event Event) (*Event, error) {
 
-	var event Event
-	// event.Timestamp = time.Now()
-	err := json.NewDecoder(r).Decode(&event)
+	// var event Event
+	// j, err := json.Marshal(r)
+	// err = json.Unmarshal(j, &event)
+	// if err != nil {
+	// 	log.Println(err)
+	// 	return nil, err
+	// }
+
+	err := event.save(c)
 	if err != nil {
 		return nil, err
 	}
-
-	event.ID = 0
-
-	err = event.save(c)
-	if err != nil {
-		return nil, err
-	}
-
 	return &event, nil
 }
 

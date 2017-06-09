@@ -1,8 +1,6 @@
 package models
 
 import (
-	"encoding/json"
-	"io"
 	"time"
 
 	"golang.org/x/net/context"
@@ -13,7 +11,7 @@ import (
 
 // Quest is data regarding ingame quests
 type Quest struct {
-	ID      int64     `json:"id"`
+	ID      int64     `json:"id" datastore:"-"`
 	UserID  int64     `json:"userId"`
 	Date    time.Time `json:"date"`
 	QuestID int64     `json:"questId"`
@@ -41,19 +39,29 @@ func (quest *Quest) save(c context.Context) error {
 	return nil
 }
 
+// // NewQuest inserts a new entry into the datastore
+// func NewQuest(c context.Context, r io.ReadCloser) (*Quest, error) {
+
+// 	var quest Quest
+// 	// quest.Timestamp = time.Now()
+// 	err := json.NewDecoder(r).Decode(&quest)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	quest.ID = 0
+
+// 	err = quest.save(c)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	return &quest, nil
+// }
+
 // NewQuest inserts a new entry into the datastore
-func NewQuest(c context.Context, r io.ReadCloser) (*Quest, error) {
-
-	var quest Quest
-	// quest.Timestamp = time.Now()
-	err := json.NewDecoder(r).Decode(&quest)
-	if err != nil {
-		return nil, err
-	}
-
-	quest.ID = 0
-
-	err = quest.save(c)
+func NewQuest(c context.Context, quest Quest) (*Quest, error) {
+	err := quest.save(c)
 	if err != nil {
 		return nil, err
 	}

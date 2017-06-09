@@ -1,0 +1,52 @@
+[{
+    "className": "UserProperty",
+    "params": {
+        "userId": 159740012,
+        "downloadDate": "2017-06-06T05:59:53+08:00",
+        "loginDate": "2017-06-08T03:25:32+08:00",
+        "os": 1,
+        "ver": 332,
+        "downloadVer": 329,
+        "reachArea": 61,
+        "wordLevel": 1,
+        "grammerLevel": 1,
+        "playerLevel": 201,
+        "cardAmount": 1268,
+        "cardLimit": 10029,
+        "chocolate": 5,
+        "gold": 211999,
+        "cookie": 138,
+        "eventTicket": 7,
+        "lottery": 6,
+        "lastHp": 22082,
+        "lastStr": 10417,
+        "lastTotal": 32499,
+        "bestHp": 22082,
+        "bestStr": 10417,
+        "bestTotal": 32499,
+        "leaderCard": 533,
+        "helperCard": 0,
+        "friend": 0,
+        "friendLimit": 0,
+        "questionTotal": 66,
+        "factoryTotal": 0,
+        "uraTotal": 6,
+        "fast": 0,
+        "light": 0
+    }
+}, {
+    "className": "UserDailyProperty",
+    "params": {
+        "userId": 159740012,
+        "loginDate": "2017-06-08T03:25:32+08:00",
+        "questDic": {
+            "2": 38,
+            "14": 191999
+        },
+        "cardAmount": 1268,
+        "playerLevel": 201,
+        "reachStage": 61,
+        "questionAmount": 47,
+        "factoryAmount": 0
+    }
+}]

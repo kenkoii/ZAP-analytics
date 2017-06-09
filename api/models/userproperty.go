@@ -1,8 +1,6 @@
 package models
 
 import (
-	"encoding/json"
-	"io"
 	"time"
 
 	"github.com/asaskevich/govalidator"
@@ -17,30 +15,30 @@ type UserProperty struct {
 	UserID          int64           `json:"userId"`
 	DownloadDate    time.Time       `json:"downloadDate"`
 	LoginDate       time.Time       `json:"loginDate"`
-	OS              operatingSystem `json:"operatingSystem"`
-	Version         float32         `json:"version"`
-	DownloadVersion float32         `json:"downloadVersion"`
+	OS              operatingSystem `json:"os"`
+	Version         float32         `json:"ver"`
+	DownloadVersion float32         `json:"downloadVer"`
 	WordLevel       int64           `json:"wordLevel"`
 	GrammarLevel    int64           `json:"grammarLevel"`
 	PlayerLevel     int64           `json:"playerLevel"`
 	CardAmount      int64           `json:"cardAmount"`
 	CardLimit       int64           `json:"cardLimit"`
 	Chocolate       int64           `json:"chocolate"`
-	Gold            int64           `json:"Gold"`
-	Cookie          int64           `json:"Cookie"`
+	Gold            int64           `json:"gold"`
+	Cookie          int64           `json:"cookie"`
 	EventTicket     int64           `json:"eventTicket"`
 	Lottery         int64           `json:"lottery"`
-	DeckInfo        string          `json:"deckInfo"` //tentative
-	LeaderCard      int64           `json:"leaderCard"`
-	HelperCard      int64           `json:"helperCard"`
-	Setting         string          `json:"setting"`
-	Friend          int64           `json:"friend"`
-	FriendLimit     int64           `json:"friendLimit"`
-	QuestionTotal   int64           `json:"questionTotal"`
-	FactoryTotal    int64           `json:"factoryTotal"`
-	UraTotal        int64           `json:"uraTotal"`
-	Fast            int64           `json:"fast"`
-	Light           int64           `json:"light"`
+	// DeckInfo        string          `json:"deckInfo"`
+	LeaderCard int64 `json:"leaderCard"`
+	HelperCard int64 `json:"helperCard"`
+	// Setting         string          `json:"setting"`
+	Friend        int64 `json:"friend"`
+	FriendLimit   int64 `json:"friendLimit"`
+	QuestionTotal int64 `json:"questionTotal"`
+	FactoryTotal  int64 `json:"factoryTotal"`
+	UraTotal      int64 `json:"uraTotal"`
+	Fast          int64 `json:"fast"`
+	Light         int64 `json:"light"`
 }
 
 type operatingSystem int
@@ -78,19 +76,27 @@ func (userProperty *UserProperty) search(c context.Context) error {
 }
 
 // NewUserProperty is a method to create a new entry
-func NewUserProperty(c context.Context, r io.ReadCloser) (*UserProperty, error) {
+// func NewUserProperty(c context.Context, r io.ReadCloser) (*UserProperty, error) {
 
-	var userProperty UserProperty
-	err := json.NewDecoder(r).Decode(&userProperty)
+// 	var userProperty UserProperty
+// 	err := json.NewDecoder(r).Decode(&userProperty)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	err = userProperty.save(c)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	return &userProperty, nil
+// }
+
+func NewUserProperty(c context.Context, userProperty UserProperty) (*UserProperty, error) {
+	err := userProperty.save(c)
 	if err != nil {
 		return nil, err
 	}
-
-	err = userProperty.save(c)
-	if err != nil {
-		return nil, err
-	}
-
 	return &userProperty, nil
 }
 

@@ -1,8 +1,6 @@
 package models
 
 import (
-	"encoding/json"
-	"io"
 	"time"
 
 	"golang.org/x/net/context"
@@ -13,12 +11,13 @@ import (
 
 // UserPurchase is information regarding each purchase made
 type UserPurchase struct {
-	ID      int64     `json:"id" datastore:"-"`
-	UserID  int64     `json:"userId"`
-	ItemID  int64     `json:"itemId"`
-	Date    time.Time `json:"date"`
-	Price   int64     `json:"price"`
-	IsFirst bool      `json:"isFirst"`
+	ID       int64     `json:"id" datastore:"-"`
+	UserID   int64     `json:"userId"`
+	ItemID   int64     `json:"itemId"`
+	Date     time.Time `json:"date"`
+	Price    float64   `json:"price"`
+	IsFirst  bool      `json:"isFirst"`
+	Currency string    `json:"currency"`
 }
 
 func (userPurchase *UserPurchase) key(c context.Context) *datastore.Key {
@@ -44,21 +43,29 @@ func (userPurchase *UserPurchase) save(c context.Context) error {
 }
 
 // NewUserPurchase inserts a new entry into the datastore
-func NewUserPurchase(c context.Context, r io.ReadCloser) (*UserPurchase, error) {
-	var userPurchase UserPurchase
-	// userPurchase.Timestamp = time.Now()
-	err := json.NewDecoder(r).Decode(&userPurchase)
+// func NewUserPurchase(c context.Context, r io.ReadCloser) (*UserPurchase, error) {
+// 	var userPurchase UserPurchase
+// 	// userPurchase.Timestamp = time.Now()
+// 	err := json.NewDecoder(r).Decode(&userPurchase)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	userPurchase.ID = 0
+
+// 	err = userPurchase.save(c)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	return &userPurchase, nil
+// }
+
+func NewUserPurchase(c context.Context, userPurchase UserPurchase) (*UserPurchase, error) {
+	err := userPurchase.save(c)
 	if err != nil {
 		return nil, err
 	}
-
-	userPurchase.ID = 0
-
-	err = userPurchase.save(c)
-	if err != nil {
-		return nil, err
-	}
-
 	return &userPurchase, nil
 }
 
