@@ -80,3 +80,19 @@ func GetAllTutorials(c context.Context) ([]Tutorial, error) {
 
 	return tutorials, nil
 }
+
+// GetTutorials fetches all user property entries from datastore
+func GetTutorials(c context.Context, start time.Time, end time.Time) ([]Tutorial, error) {
+	q := datastore.NewQuery("Tutorial").Filter("Date >=", start).Filter("Date <", end.Add(time.Duration(time.Hour*24))).Order("Date")
+	var tutorials []Tutorial
+	keys, err := q.GetAll(c, &tutorials)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(keys); i++ {
+		tutorials[i].ID = keys[i].IntID()
+	}
+
+	return tutorials, nil
+}

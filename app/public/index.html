@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Analytics</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="https://use.fontawesome.com/24dd1f9e54.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/jquery-ui.min.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css"/>-->
+  </head>
+  <body>
+    <section class="sect team-card">
+        <div class="backdrop"></div>
+        <div class="container">
+            <div class="row">
+                <div class="floating-card">
+                <form class="form">
+
+                        <h1>ENGLISH STORY ANALYTICS</h1>
+                        <div class="column half">
+                          <div class="form-input-container">
+                              <h4>Select Data</h4>
+                              <select id="table" class="form-input" name="table">
+                                  <option value="userpurchases">UserPurchase</option>
+                                  <option value="userproperties">UserProperty</option>
+                                  <option value="userdailyproperties">UserDailyProperty</option>
+                                  <option value="tutorials">Tutorial</option>
+                                  <option value="stages">Stage</option>
+                              </select>
+                          </div>
+                        </div>
+                        <div class="column half">
+                            <div class="form-input-container">
+                                <h4>Start Date</h4>
+                                <input type="text" id="start" value="" class="form-input date-picker">
+                            </div>
+                        </div>
+                        <div class="column half">
+
+                        </div>
+                        <div class="column half" >
+                            <div class="form-input-container" style="display: none" id="filter">
+                                <h4>Filter</h4>
+                                <input type="radio" name="filter" value="LoginDate"> &nbsp; LoginDate
+                                <input type="radio" name="filter" value="DownloadDate"> &nbsp;  DownloadDate
+                            </div>
+                        </div>
+                        <div class="column half">
+                            <div class="form-input-container">
+                                <h4>End Date</h4>
+                                <input type="text" id="end" value="" class="form-input date-picker">
+                            </div>
+                        </div>
+                        <button type="button "id="generate" class="submit-btn">Generate</button>
+                        <button type="button "id="reset" class="submit-btn" hidden="true">Reset</button>
+                        <a href="#" id="download" class="submit-btn" style="text-decoration: none; display: none">Download CSV</a>
+
+                </form>
+                <textarea id="result" style="width: 100%" rows="20" hidden readonly></textarea>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+       <img src="assets/img/frecre.png" alt="" class="top-logo">
+       <ul>
+           <li><a href="">BLOG</a></li>
+           <li>|</li>
+           <li><a href="">CONTACT</a></li>
+           <li>|</li>
+           <li><a href="">ABOUT</a></li>
+       </ul>
+       <p>© Copyright 2017 Frecre. All rights reserved.</p>
+    </footer>
+    <script src="assets/js/jquery.min.js"></script>
+<!--
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
+    <!--<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>-->
+    <script src="assets/js/jquery-ui.min.js"></script>
+    <!--<script src="assets/js/jquery.jqGrid.js"></script>-->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/papaparse.min.js"></script>
+    <script>
+        // $('.date-picker').datetimepicker('getValue');
+        $('.date-picker').datepicker({
+          dateFormat: "yy-mm-dd"
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+@media (max-width: 1024px){
+    .top{
+        height: 100% !important;
+    }
+    .top-details{
+        img{
+            width: 100% !important;
+        }
+    }
+    .floating-card{
+        padding: 20px !important;
+        box-shadow: none !important;
+        h1{
+            font-size: 30px !important;
+        }
+        .mission-author{
+            width: 100% !important;
+        }
+    }
+    .assets{
+        h1{
+            font-size: 30px !important;
+        }
+    }
+    footer{
+        ul{
+            width: 100% !important;
+        }
+    }
+}

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	x "log"
 	"net/http"
+	"time"
 
 	"golang.org/x/net/context"
 	"google.golang.org/appengine"
@@ -154,3 +155,218 @@ func LogError(ctx context.Context, err error, w http.ResponseWriter) {
 	x.Println(err)
 	json.NewEncoder(w).Encode(1)
 }
+
+// GetUserPurchaseEndpoint handles POST requests on analytics endpoint
+func GetUserPurchaseEndpoint(w http.ResponseWriter, r *http.Request) {
+	ctx := appengine.NewContext(r)
+	if r.FormValue("start") == "" && r.FormValue("end") == "" {
+		http.Error(w, "Date Error: Start and End Date param missing", http.StatusInternalServerError)
+		return
+	}
+
+	start, err := time.Parse("2006-01-02", r.FormValue("start"))
+	if err != nil {
+		http.Error(w, "Start Date Error: Please follow format YYYY-MM-DD", http.StatusInternalServerError)
+		return
+	}
+
+	end, err := time.Parse("2006-01-02", r.FormValue("end"))
+	if err != nil {
+		http.Error(w, "End Date Error: Please follow format YYYY-MM-DD", http.StatusInternalServerError)
+		return
+	}
+
+	results, err := models.GetUserPurchases(ctx, start, end)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(results)
+}
+
+func GetUserPropertiesEndpoint(w http.ResponseWriter, r *http.Request) {
+	ctx := appengine.NewContext(r)
+	if r.FormValue("start") == "" && r.FormValue("end") == "" {
+		http.Error(w, "Date Error: Start and End Date param missing", http.StatusInternalServerError)
+		return
+	}
+
+	start, err := time.Parse("2006-01-02", r.FormValue("start"))
+	if err != nil {
+		http.Error(w, "Start Date Error: Please follow format YYYY-MM-DD", http.StatusInternalServerError)
+		return
+	}
+
+	end, err := time.Parse("2006-01-02", r.FormValue("end"))
+	if err != nil {
+		http.Error(w, "End Date Error: Please follow format YYYY-MM-DD", http.StatusInternalServerError)
+		return
+	}
+
+	filter := r.FormValue("filter")
+	if filter == "" {
+		http.Error(w, "Request Error: Filter param missing. Specify filter name.", http.StatusInternalServerError)
+		return
+	}
+
+	results, err := models.GetUserProperties(ctx, start, end, filter)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(results)
+}
+
+// GetUserDailyPropertiesEndpoint handles POST requests on analytics endpoint
+func GetUserDailyPropertiesEndpoint(w http.ResponseWriter, r *http.Request) {
+	ctx := appengine.NewContext(r)
+	if r.FormValue("start") == "" && r.FormValue("end") == "" {
+		http.Error(w, "Date Error: Start and End Date param missing", http.StatusInternalServerError)
+		return
+	}
+
+	start, err := time.Parse("2006-01-02", r.FormValue("start"))
+	if err != nil {
+		http.Error(w, "Start Date Error: Please follow format YYYY-MM-DD", http.StatusInternalServerError)
+		return
+	}
+
+	end, err := time.Parse("2006-01-02", r.FormValue("end"))
+	if err != nil {
+		http.Error(w, "End Date Error: Please follow format YYYY-MM-DD", http.StatusInternalServerError)
+		return
+	}
+
+	results, err := models.GetUserDailyProperties(ctx, start, end)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(results)
+}
+
+// GetUserDailyPropertiesEndpoint handles POST requests on analytics endpoint
+func GetTutorialsEndpoint(w http.ResponseWriter, r *http.Request) {
+	ctx := appengine.NewContext(r)
+	if r.FormValue("start") == "" && r.FormValue("end") == "" {
+		http.Error(w, "Date Error: Start and End Date param missing", http.StatusInternalServerError)
+		return
+	}
+
+	start, err := time.Parse("2006-01-02", r.FormValue("start"))
+	if err != nil {
+		http.Error(w, "Start Date Error: Please follow format YYYY-MM-DD", http.StatusInternalServerError)
+		return
+	}
+
+	end, err := time.Parse("2006-01-02", r.FormValue("end"))
+	if err != nil {
+		http.Error(w, "End Date Error: Please follow format YYYY-MM-DD", http.StatusInternalServerError)
+		return
+	}
+
+	results, err := models.GetTutorials(ctx, start, end)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(results)
+}
+
+// GetStagesEndpoint handles POST requests on analytics endpoint
+func GetStagesEndpoint(w http.ResponseWriter, r *http.Request) {
+	ctx := appengine.NewContext(r)
+	if r.FormValue("start") == "" && r.FormValue("end") == "" {
+		http.Error(w, "Date Error: Start and End Date param missing", http.StatusInternalServerError)
+		return
+	}
+
+	start, err := time.Parse("2006-01-02", r.FormValue("start"))
+	if err != nil {
+		http.Error(w, "Start Date Error: Please follow format YYYY-MM-DD", http.StatusInternalServerError)
+		return
+	}
+
+	end, err := time.Parse("2006-01-02", r.FormValue("end"))
+	if err != nil {
+		http.Error(w, "End Date Error: Please follow format YYYY-MM-DD", http.StatusInternalServerError)
+		return
+	}
+
+	results, err := models.GetStages(ctx, start, end)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(results)
+}
+
+/*
+
+
+func GetDataByDateEndpoint(w http.ResponseWriter, r *http.Request) {
+	ctx := appengine.NewContext(r)
+	if r.FormValue("table") == "" {
+		http.Error(w, "Request Error: Table param missing. Specify table name.", http.StatusInternalServerError)
+		return
+	}
+
+	if r.FormValue("start") == "" && r.FormValue("end") == "" {
+		http.Error(w, "Date Error: Start and End Date param missing", http.StatusInternalServerError)
+		return
+	}
+
+	start, err := time.Parse("2006-01-02", r.FormValue("start"))
+	if err != nil {
+		http.Error(w, "Start Date Error: Please follow format YYYY-MM-DD", http.StatusInternalServerError)
+		return
+	}
+
+	end, err := time.Parse("2006-01-02", r.FormValue("end"))
+	if err != nil {
+		http.Error(w, "End Date Error: Please follow format YYYY-MM-DD", http.StatusInternalServerError)
+		return
+	}
+
+	switch r.FormValue("table") == "" {
+		case "UserProperty":
+			{
+				results, err := models.GetUserPurchases(ctx, start, end)
+			}
+		case "UserPurchase":
+			{
+				results, err := models.GetUserPurchases(ctx, start, end)
+			}
+		case "UserDailyProperty":
+			{
+				results, err := models.GetUserPurchases(ctx, start, end)
+			}
+		case "Tutorial":
+			{
+				results, err := models.GetUserPurchases(ctx, start, end)
+			}
+		case "Stage":
+			{
+				results, err := models.GetUserPurchases(ctx, start, end)
+			}
+		case "Quest":
+			{
+				results, err := models.GetUserPurchases(ctx, start, end)
+			}
+		case "Event":
+			{
+				results, err := models.GetUserPurchases(ctx, start, end)
+			}
+		}
+
+
+
+	results, err := models.GetUserPurchases(ctx, start, end)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(results)
+}
+
+*/

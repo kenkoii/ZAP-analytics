@@ -1,0 +1,22 @@
+@media (max-width: 1024px) {
+  .top {
+    height: 100% !important; }
+
+  .top-details img {
+    width: 100% !important; }
+
+  .floating-card {
+    padding: 20px !important;
+    box-shadow: none !important; }
+    .floating-card h1 {
+      font-size: 30px !important; }
+    .floating-card .mission-author {
+      width: 100% !important; }
+
+  .assets h1 {
+    font-size: 30px !important; }
+
+  footer ul {
+    width: 100% !important; } }
+
+/*# sourceMappingURL=responsive.css.map */

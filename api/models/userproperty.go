@@ -124,3 +124,15 @@ func GetUserProperty(c context.Context, id int64) (interface{}, error) {
 	}
 	return &userProperty, nil
 }
+
+//  GetUserProperties fetches all user property entries from datastore
+func GetUserProperties(c context.Context, start time.Time, end time.Time, filter string) ([]UserProperty, error) {
+	q := datastore.NewQuery("UserProperty").Filter(filter+" >=", start).Filter(filter+" <", end.Add(time.Duration(time.Hour*24))).Order(filter)
+	var userProperty []UserProperty
+	_, err := q.GetAll(c, &userProperty)
+	if err != nil {
+		return nil, err
+	}
+
+	return userProperty, nil
+}

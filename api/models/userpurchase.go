@@ -81,3 +81,19 @@ func GetAllUserPurchases(c context.Context) ([]UserPurchase, error) {
 
 	return userPurchases, nil
 }
+
+// GetUserPurchases fetches all user property entries from datastore
+func GetUserPurchases(c context.Context, start time.Time, end time.Time) ([]UserPurchase, error) {
+	q := datastore.NewQuery("UserPurchase").Filter("Date >=", start).Filter("Date <", end.Add(time.Duration(time.Hour*24))).Order("Date")
+	var userPurchases []UserPurchase
+	keys, err := q.GetAll(c, &userPurchases)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(keys); i++ {
+		userPurchases[i].ID = keys[i].IntID()
+	}
+
+	return userPurchases, nil
+}

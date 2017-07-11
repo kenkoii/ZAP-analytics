@@ -94,3 +94,19 @@ func GetAllStages(c context.Context) ([]Stage, error) {
 
 	return stages, nil
 }
+
+// GetStages fetches all user property entries from datastore
+func GetStages(c context.Context, start time.Time, end time.Time) ([]Stage, error) {
+	q := datastore.NewQuery("Stage").Filter("Date >=", start).Filter("Date <", end.Add(time.Duration(time.Hour*24))).Order("Date")
+	var stages []Stage
+	keys, err := q.GetAll(c, &stages)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(keys); i++ {
+		stages[i].ID = keys[i].IntID()
+	}
+
+	return stages, nil
+}

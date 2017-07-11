@@ -1,0 +1,34 @@
+* {
+  box-sizing: border-box; }
+
+.container {
+  width: 1200px;
+  margin: 0px auto; }
+  .container.fit {
+    width: 100%; }
+  .container .row::after {
+    content: " ";
+    display: block;
+    clear: both; }
+  .container .row .column {
+    float: left;
+    padding: 3px;
+    height: 100%; }
+    .container .row .column.half {
+      width: 50%; }
+    .container .row .column.one {
+      width: 33.33%; }
+    .container .row .column.two {
+      width: 66.66%; }
+    .container .row .column.three {
+      width: 100%; }
+
+@media (max-width: 1024px) {
+  .container {
+    width: 100% !important; }
+    .container .column {
+      width: 100% !important; }
+    .container .row {
+      padding: 0; } }
+
+/*# sourceMappingURL=grid.css.map */

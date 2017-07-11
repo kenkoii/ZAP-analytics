@@ -108,3 +108,19 @@ func GetAllUserDailyProperties(c context.Context) ([]UserDailyProperty, error) {
 
 	return userDailyProperties, nil
 }
+
+// GetUserDailyProperties fetches all user property entries from datastore
+func GetUserDailyProperties(c context.Context, start time.Time, end time.Time) ([]UserDailyProperty, error) {
+	q := datastore.NewQuery("UserDailyProperty").Filter("LoginDate >=", start).Filter("LoginDate <", end.Add(time.Duration(time.Hour*24))).Order("LoginDate")
+	var userDailyProperties []UserDailyProperty
+	keys, err := q.GetAll(c, &userDailyProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(keys); i++ {
+		userDailyProperties[i].ID = keys[i].IntID()
+	}
+
+	return userDailyProperties, nil
+}
