@@ -1,21 +1,26 @@
 $(document).ready(function(){
-
+  const password = 'd880d38272b0c35cb21fe6a7f3038959'
   $('#generate').click(function(e){
       e.preventDefault();
       console.log("Yoohoo")
       var params = loadParams();
       console.log(params);
-      // $.get("http://0f291035.ngrok.io/api/v1/analytics/" + $('#table').val(), params, function(data, status){
-      $.get("https://frecre-analytics.appspot.com/api/v1/analytics/" + $('#table').val(), params, function(data, status){
+      if($.md5($('#password').val()) === password) {
+        $.get("https://frecre-analytics.appspot.com/api/v1/analytics/" + $('#table').val(), params, function(data, status){
 
-         var csv = Papa.unparse(data);
-         console.log(csv);
-         console.log(data);
-         showDownloadCSVButton(csv, $('#table').val(), params);
-        //  buildHtmlTable(JSON.parse(data));
-        $('#result').show().val(JSON.stringify(JSON.parse(data), undefined, 4));
-         toggleButtons();
-      });
+          var csv = Papa.unparse(data);
+          console.log(csv);
+          console.log(data);
+          showDownloadCSVButton(csv, $('#table').val(), params);
+          //  buildHtmlTable(JSON.parse(data));
+          $('#result').show().val(JSON.stringify(JSON.parse(data), undefined, 4));
+          toggleButtons();
+        });
+      } else {
+        alert("Error: Incorrect Password");
+      }
+      // $.get("http://0f291035.ngrok.io/api/v1/analytics/" + $('#table').val(), params, function(data, status){
+      
       // $(this).attr({'hidden': true});
       // $('#reset').attr({})
   });
