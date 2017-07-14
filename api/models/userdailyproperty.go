@@ -122,5 +122,9 @@ func GetUserDailyProperties(c context.Context, start time.Time, end time.Time) (
 		userDailyProperties[i].ID = keys[i].IntID()
 	}
 
+	if userDailyProperties == nil {
+		return []UserDailyProperty{}, nil
+	}
+
 	return userDailyProperties, nil
 }

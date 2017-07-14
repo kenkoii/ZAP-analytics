@@ -94,5 +94,9 @@ func GetTutorials(c context.Context, start time.Time, end time.Time) ([]Tutorial
 		tutorials[i].ID = keys[i].IntID()
 	}
 
+	if tutorials == nil {
+		return []Tutorial{}, nil
+	}
+
 	return tutorials, nil
 }

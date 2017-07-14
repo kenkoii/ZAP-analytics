@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  const password = 'd880d38272b0c35cb21fe6a7f3038959'
+  const password = 'd880d38272b0c35cb21fe6a7f3038959';
   $('#generate').click(function(e){
       e.preventDefault();
       console.log("Yoohoo")

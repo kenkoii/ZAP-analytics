@@ -16,7 +16,7 @@ import (
 // PostEntriesEndpoint handles POST requests on analytics endpoint
 func PostEntriesEndpoint(w http.ResponseWriter, r *http.Request) {
 	var count = 0
-	ctx := appengine.NewContext(r)
+	ctx, _ := context.WithTimeout(appengine.NewContext(r), time.Second*30)
 	var analyticsRequests []models.AnalyticsRequest
 	err := json.NewDecoder(r.Body).Decode(&analyticsRequests)
 	if err != nil {
@@ -158,7 +158,7 @@ func LogError(ctx context.Context, err error, w http.ResponseWriter) {
 
 // GetUserPurchaseEndpoint handles POST requests on analytics endpoint
 func GetUserPurchaseEndpoint(w http.ResponseWriter, r *http.Request) {
-	ctx := appengine.NewContext(r)
+	ctx, _ := context.WithTimeout(appengine.NewContext(r), time.Second*30)
 	if r.FormValue("start") == "" && r.FormValue("end") == "" {
 		http.Error(w, "Date Error: Start and End Date param missing", http.StatusInternalServerError)
 		return
@@ -185,7 +185,7 @@ func GetUserPurchaseEndpoint(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUserPropertiesEndpoint(w http.ResponseWriter, r *http.Request) {
-	ctx := appengine.NewContext(r)
+	ctx, _ := context.WithTimeout(appengine.NewContext(r), time.Second*30)
 	if r.FormValue("start") == "" && r.FormValue("end") == "" {
 		http.Error(w, "Date Error: Start and End Date param missing", http.StatusInternalServerError)
 		return
@@ -219,7 +219,7 @@ func GetUserPropertiesEndpoint(w http.ResponseWriter, r *http.Request) {
 
 // GetUserDailyPropertiesEndpoint handles POST requests on analytics endpoint
 func GetUserDailyPropertiesEndpoint(w http.ResponseWriter, r *http.Request) {
-	ctx := appengine.NewContext(r)
+	ctx, _ := context.WithTimeout(appengine.NewContext(r), time.Second*30)
 	if r.FormValue("start") == "" && r.FormValue("end") == "" {
 		http.Error(w, "Date Error: Start and End Date param missing", http.StatusInternalServerError)
 		return
@@ -247,7 +247,7 @@ func GetUserDailyPropertiesEndpoint(w http.ResponseWriter, r *http.Request) {
 
 // GetUserDailyPropertiesEndpoint handles POST requests on analytics endpoint
 func GetTutorialsEndpoint(w http.ResponseWriter, r *http.Request) {
-	ctx := appengine.NewContext(r)
+	ctx, _ := context.WithTimeout(appengine.NewContext(r), time.Second*30)
 	if r.FormValue("start") == "" && r.FormValue("end") == "" {
 		http.Error(w, "Date Error: Start and End Date param missing", http.StatusInternalServerError)
 		return
@@ -275,7 +275,8 @@ func GetTutorialsEndpoint(w http.ResponseWriter, r *http.Request) {
 
 // GetStagesEndpoint handles POST requests on analytics endpoint
 func GetStagesEndpoint(w http.ResponseWriter, r *http.Request) {
-	ctx := appengine.NewContext(r)
+	ctx, _ := context.WithTimeout(appengine.NewContext(r), time.Second*30)
+
 	if r.FormValue("start") == "" && r.FormValue("end") == "" {
 		http.Error(w, "Date Error: Start and End Date param missing", http.StatusInternalServerError)
 		return

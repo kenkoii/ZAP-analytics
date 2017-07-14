@@ -95,5 +95,9 @@ func GetUserPurchases(c context.Context, start time.Time, end time.Time) ([]User
 		userPurchases[i].ID = keys[i].IntID()
 	}
 
+	if userPurchases == nil {
+		return []UserPurchase{}, nil
+	}
+
 	return userPurchases, nil
 }

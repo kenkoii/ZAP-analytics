@@ -134,5 +134,9 @@ func GetUserProperties(c context.Context, start time.Time, end time.Time, filter
 		return nil, err
 	}
 
+	if userProperty == nil {
+		return []UserProperty{}, nil
+	}
+
 	return userProperty, nil
 }

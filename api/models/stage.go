@@ -108,5 +108,9 @@ func GetStages(c context.Context, start time.Time, end time.Time) ([]Stage, erro
 		stages[i].ID = keys[i].IntID()
 	}
 
+	if stages == nil {
+		return []Stage{}, nil
+	}
+
 	return stages, nil
 }
