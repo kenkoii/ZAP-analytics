@@ -309,7 +309,6 @@ footer {
   background: rgba(0, 0, 0, 0.05); }
 
 select.form-input {
-  position: relative;
   font-size: 12px; }
   select.form-input::after {
     content: " ";
@@ -336,3 +335,40 @@ select.form-input {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); }
 
 /*# sourceMappingURL=styles.css.map */
+.loader-container{
+  background: rgba(255,255,255,0.7);
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.spinner {
+  position: relative;
+  top: 200px;
+  width: 80px;
+  height: 80px;
+  margin: auto;
+  background-color: #303FAF;
+  border-radius: 100%;  
+  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-scaleout {
+  0% { -webkit-transform: scale(0) }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes sk-scaleout {
+  0% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 100% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}

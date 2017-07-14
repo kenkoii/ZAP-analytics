@@ -293,7 +293,6 @@ footer {
   background: rgba(0, 0, 0, 0.05); }
 
 select.form-input {
-  position: relative;
   font-size: 18px; }
   select.form-input::after {
     content: " ";

@@ -10,7 +10,12 @@
     <link rel="stylesheet" type="text/css" href="assets/css/jquery-ui.min.css"/>
     <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css"/>-->
   </head>
+
   <body>
+    <div id="loader" class="loader-container" style="display:none">
+        <!--<div class="loader" style="position:absolute">Loading...</div>-->
+        <div class="spinner"></div>
+    </div>
     <section class="sect team-card">
         <div class="backdrop"></div>
         <div class="container">
@@ -50,7 +55,7 @@
                         <div class="column half" >
                             <div class="form-input-container" style="display: none" id="filter">
                                 <h4>Filter</h4>
-                                <input type="radio" name="filter" value="LoginDate"> &nbsp; LoginDate
+                                <input type="radio" checked name="filter" value="LoginDate"> &nbsp; LoginDate
                                 <input type="radio" name="filter" value="DownloadDate"> &nbsp;  DownloadDate
                             </div>
                         </div>
@@ -65,7 +70,10 @@
                         <a href="#" id="download" class="submit-btn" style="text-decoration: none; display: none">Download CSV</a>
 
                 </form>
-                <textarea id="result" style="width: 100%" rows="20" hidden readonly></textarea>
+                <div id="result-div">   
+                    
+                    
+                </div>
                 </div>
             </div>
         </div>

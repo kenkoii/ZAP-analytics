@@ -5,19 +5,27 @@ $(document).ready(function(){
       console.log("Yoohoo")
       var params = loadParams();
       console.log(params);
+      $('#generate').attr({hidden: true});
+      $('#loader').css({'display': 'block'});
       if($.md5($('#password').val()) === password) {
         $.get("https://frecre-analytics.appspot.com/api/v1/analytics/" + $('#table').val(), params, function(data, status){
 
           var csv = Papa.unparse(data);
+          var JSONData = JSON.parse(data);
           console.log(csv);
-          console.log(data);
+          console.log(JSONData);
           showDownloadCSVButton(csv, $('#table').val(), params);
           //  buildHtmlTable(JSON.parse(data));
-          $('#result').show().val(JSON.stringify(JSON.parse(data), undefined, 4));
+          
+          $('#result-div').append("<p style='font-size: 15px'>Number of rows returned: <strong style='color: #000'>" + JSONData.length + "</strong></p>");
+          $('#result-div').append('<textarea id="result" style="width: 100%" rows="20" hidden readonly></textarea>');
+          $('#result').show().val(JSON.stringify(JSONData, undefined, 4));
           toggleButtons();
         });
       } else {
         alert("Error: Incorrect Password");
+        $('#generate').attr({hidden: null});
+        $('#loader').css({'display': 'none'});
       }
       // $.get("http://0f291035.ngrok.io/api/v1/analytics/" + $('#table').val(), params, function(data, status){
       
@@ -42,8 +50,11 @@ $(document).ready(function(){
 function toggleButtons() {
   // var generate = $('#generate').attr('hidden');
   // var reset = $('#reset').attr('hidden')
-  $('#generate').attr({hidden: true});
+  // $('#generate').attr({hidden: true});
+  $('#loader').css({'display': 'none'});
   $('#reset').attr({hidden: null});
+  $('input').attr({'disabled': true});
+  $('select').prop('disabled', 'disabled');
 }
 
 function resetPage() {
@@ -52,10 +63,13 @@ function resetPage() {
 
 function showDownloadCSVButton(csv, table, params) {
   // Data URI
-  csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+  // csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+  xData = new Blob([csv], { type: 'text/csv' });
+  var xUrl = URL.createObjectURL(xData);
+  // a.href = xUrl;
   const filename = params.start + params.end + table;
   $('#download').css({'display': 'block'})
-                .attr({'download': filename, 'href': csvData, 'target': '_blank'});
+                .attr({'download': filename, 'href': xUrl, 'target': '_blank'});
 }
 
 function hideDownloadButton() {
