@@ -1,0 +1,102 @@
+{{ template "header.tmpl" .}}
+<div id="loader" class="loader-container" style="display:none">
+      <!--<div class="loader" style="position:absolute">Loading...</div>-->
+      <div class="spinner"></div>
+</div>
+<section class="sect team-card">
+      <div class="backdrop"></div>
+      <div class="container">
+            <div class="row">
+                  <div class="floating-card">
+                        <form id="form" class="form" method="POST" action="">
+
+                              <h1>ENGLISH STORY ANALYTICS</h1>
+                              <div class="column half"></div>
+                              <div class="column half">
+                                    <div class="form-input-container">
+                                          <h4>Password</h4>
+                                          <input type="password" id="password" value="" class="form-input" required>
+                                    </div>
+                              </div>
+                              <div class="column half">
+                                    <div class="form-input-container">
+                                          <h4>Select Data</h4>
+                                          <select id="table" class="form-input" name="table" required>
+                              <option value="userpurchases">UserPurchase</option>
+                              <option value="userproperties">UserProperty</option>
+                              <option value="userdailyproperties">UserDailyProperty</option>
+                              <option value="tutorials">Tutorial</option>
+                              <option value="stages">Stage</option>
+                        </select>
+                                    </div>
+                              </div>
+                              <div class="column half">
+                                    <div class="form-input-container">
+                                          <h4>Start Date</h4>
+                                          <input type="text" name="start" id="start" value="" class="form-input date-picker" required>
+                                    </div>
+                              </div>
+                              <div class="column half">
+
+                              </div>
+                              <div class="column half">
+                                    <div class="form-input-container" style="display: none" id="filter">
+                                          <h4>Filter</h4>
+                                          <input type="radio" checked name="filter" value="LoginDate"> &nbsp; LoginDate
+                                          <input type="radio" name="filter" value="DownloadDate"> &nbsp; DownloadDate
+                                    </div>
+                              </div>
+                              <div class="column half">
+                                    <div class="form-input-container">
+                                          <h4>End Date</h4>
+                                          <input type="text" name="end" id="end" value="" class="form-input date-picker" required>
+                                    </div>
+                              </div>
+                              <button type="button" id="generate" class="submit-btn">Generate</button>
+                              <button type="button" id="reset" class="submit-btn" hidden="true">Reset</button>
+                              <a href="#" id="download" class="submit-btn" style="text-decoration: none; display: none">Download CSV</a>
+
+                        </form>
+                        <div id="result-div">
+
+
+                        </div>
+                  </div>
+            </div>
+      </div>
+</section>
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/jquery-ui.min.js"></script>
+<script src="../assets/js/jquery.md5.js"></script>
+<script src="../assets/js/papaparse.min.js"></script>
+<script src="../assets/js/main.js"></script>
+<script>
+      $('.date-picker').datepicker({
+      dateFormat: "yy-mm-dd"
+      });
+</script>
+{{if .method}} 
+      <script>
+            $(document).ready(function(){
+                  var payload = {{.}}
+                  console.log(payload);
+                  var data = payload.data;
+                  var params = payload.params;
+                  console.log(data);
+                  var csv = Papa.unparse(data);
+                  console.log("Hello World");
+                  loadFields(params);
+                  showDownloadCSVButton(csv, $('#table').val(), params);
+                  
+                  $('#result-div').append("<p style='font-size: 15px'>Number of rows returned: <strong style='color: #000'>" + data.length + "</strong></p>");
+                  $('#result-div').append('<textarea id="result" style="width: 100%" rows="20" hidden readonly></textarea>');
+                  $('#result').show().val(JSON.stringify(data, undefined, 4));
+                  toggleButtons();
+            });
+      </script>
+{{else}}
+      <script>
+            console.log("Hello World");
+      </script>
+{{end}}
+{{ template "footer.tmpl" .}}

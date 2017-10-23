@@ -8,20 +8,21 @@ $(document).ready(function(){
       $('#generate').attr({hidden: true});
       $('#loader').css({'display': 'block'});
       if($.md5($('#password').val()) === password) {
-        $.get("https://frecre-analytics.appspot.com/api/v1/analytics/" + $('#table').val(), params, function(data, status){
+        $('#form').submit();
+        // $.get("https://frecre-analytics.appspot.com/api/v1/analytics/" + $('#table').val(), params, function(data, status){
 
-          var csv = Papa.unparse(data);
-          var JSONData = JSON.parse(data);
-          console.log(csv);
-          console.log(JSONData);
-          showDownloadCSVButton(csv, $('#table').val(), params);
-          //  buildHtmlTable(JSON.parse(data));
+        //   var csv = Papa.unparse(data);
+        //   var JSONData = JSON.parse(data);
+        //   console.log(csv);
+        //   console.log(JSONData);
+        //   showDownloadCSVButton(csv, $('#table').val(), params);
+        //   //  buildHtmlTable(JSON.parse(data));
           
-          $('#result-div').append("<p style='font-size: 15px'>Number of rows returned: <strong style='color: #000'>" + JSONData.length + "</strong></p>");
-          $('#result-div').append('<textarea id="result" style="width: 100%" rows="20" hidden readonly></textarea>');
-          $('#result').show().val(JSON.stringify(JSONData, undefined, 4));
-          toggleButtons();
-        });
+        //   $('#result-div').append("<p style='font-size: 15px'>Number of rows returned: <strong style='color: #000'>" + JSONData.length + "</strong></p>");
+        //   $('#result-div').append('<textarea id="result" style="width: 100%" rows="20" hidden readonly></textarea>');
+        //   $('#result').show().val(JSON.stringify(JSONData, undefined, 4));
+        //   toggleButtons();
+        // });
       } else {
         alert("Error: Incorrect Password");
         $('#generate').attr({hidden: null});
@@ -47,7 +48,6 @@ $(document).ready(function(){
   });
 });
 
-
 function toggleButtons() {
   // var generate = $('#generate').attr('hidden');
   // var reset = $('#reset').attr('hidden')
@@ -59,10 +59,12 @@ function toggleButtons() {
 }
 
 function resetPage() {
-  window.location.reload();
+  console.log('Hello');
+  // window.location.reload(true);
+  window.location.href = window.location.href;
 }
 
-$(function showDownloadCSVButton(csv, table, params) {
+function showDownloadCSVButton(csv, table, params) {
   // Data URI
   // csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
   xData = new Blob([csv], { type: 'text/csv' });
@@ -71,7 +73,7 @@ $(function showDownloadCSVButton(csv, table, params) {
   const filename = params.start + params.end + table;
   $('#download').css({'display': 'block'})
                 .attr({'download': filename, 'href': xUrl, 'target': '_blank'});
-});
+}
 
 function hideDownloadButton() {
   $('#download').css({'display': 'none'});
@@ -93,6 +95,13 @@ function loadParams() {
   return params;
 }
 
+
+function loadFields(params) {
+  $('#start').val(params['start']);
+  $('#end').val(params['end']);
+  $('#table').val(params['table']);
+  $('#filter').val(params['filter']);
+}
 
 // Builds the HTML Table out of myList.
 function buildHtmlTable(myList) {

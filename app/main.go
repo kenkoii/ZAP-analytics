@@ -3,19 +3,24 @@ package app
 import (
 	"net/http"
 
-	"github.com/codegangsta/negroni"
+	"github.com/gin-gonic/gin"
+	"github.com/kenkoii/Analytics/api/controllers"
+	"github.com/kenkoii/Analytics/api/middlewares"
 	"github.com/kenkoii/Analytics/api/routers"
-	"github.com/rs/cors"
 )
 
 func init() {
-	c := cors.New(cors.Options{
-		AllowedMethods: []string{"GET", "POST", "DELETE", "PUT"},
-	})
-	router := routers.InitRoutes()
-	router.Handle("/", http.FileServer(http.Dir("./public")))
-	n := negroni.Classic()
-	handler := c.Handler(router)
-	n.UseHandler(handler)
-	http.Handle("/", n)
+	http.Handle("/", GetMainEngine())
+}
+
+func GetMainEngine() *gin.Engine {
+	router := gin.Default()
+	router.Use(middlewares.CORSMiddleware())
+	// router.GET("/", handlers.Greetings)
+	router.LoadHTMLGlob("templates/*")
+	router.Static("assets", "assets")
+	router.GET("/", controllers.HomePageController)
+	router.POST("/", controllers.ResultPageController)
+	router = routers.InitGinRoutes(router)
+	return router
 }
