@@ -144,6 +144,22 @@ func PostAnalytics(c *gin.Context) {
 					}
 					count++
 				}
+			case "Gacha":
+				{
+					var gacha models.Gacha
+					if err := json.Unmarshal(analyticsRequests[i].Params, &gacha); err != nil {
+						LogErrorGin(c, err)
+						return
+					}
+
+					_, err := models.NewGacha(ctx, gacha)
+					if err != nil {
+						// http.Error(w, err.Error(), http.StatusInternalServerError)
+						LogErrorGin(c, err)
+						return
+					}
+					count++
+				}
 			}
 		}
 		c.String(http.StatusOK, "1")

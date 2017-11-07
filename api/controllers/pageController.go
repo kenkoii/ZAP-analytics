@@ -78,6 +78,13 @@ func ResultPageController(c *gin.Context) {
 		}
 		RenderResult(c, results, params)
 		break
+	case "gachas":
+		results, err := models.GetGachas(ctx, start, end)
+		if err != nil {
+			LogError(c, err)
+		}
+		RenderResult(c, results, params)
+		break
 	}
 }
 

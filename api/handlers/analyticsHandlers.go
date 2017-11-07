@@ -137,6 +137,22 @@ func PostEntriesEndpoint(w http.ResponseWriter, r *http.Request) {
 				}
 				count++
 			}
+		case "Gacha":
+			{
+				var gacha models.Gacha
+				if err := json.Unmarshal(analyticsRequests[i].Params, &gacha); err != nil {
+					LogError(ctx, err, w)
+					return
+				}
+
+				_, err := models.NewGacha(ctx, gacha)
+				if err != nil {
+					// http.Error(w, err.Error(), http.StatusInternalServerError)
+					LogError(ctx, err, w)
+					return
+				}
+				count++
+			}
 		}
 	}
 	if err != nil {
@@ -295,6 +311,34 @@ func GetStagesEndpoint(w http.ResponseWriter, r *http.Request) {
 	}
 
 	results, err := models.GetStages(ctx, start, end)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(results)
+}
+
+func GetGachasEndpoint(w http.ResponseWriter, r *http.Request) {
+	ctx, _ := context.WithTimeout(appengine.NewContext(r), time.Second*30)
+
+	if r.FormValue("start") == "" && r.FormValue("end") == "" {
+		http.Error(w, "Date Error: Start and End Date param missing", http.StatusInternalServerError)
+		return
+	}
+
+	start, err := time.Parse("2006-01-02", r.FormValue("start"))
+	if err != nil {
+		http.Error(w, "Start Date Error: Please follow format YYYY-MM-DD", http.StatusInternalServerError)
+		return
+	}
+
+	end, err := time.Parse("2006-01-02", r.FormValue("end"))
+	if err != nil {
+		http.Error(w, "End Date Error: Please follow format YYYY-MM-DD", http.StatusInternalServerError)
+		return
+	}
+
+	results, err := models.GetGachas(ctx, start, end)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
